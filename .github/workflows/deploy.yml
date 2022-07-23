@@ -6,9 +6,13 @@ on:
     types:
       - completed
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
-  Deploy:
-    name: Deploy
+  Get-deploy-artifact:
+    name: Get deploy artifact
     runs-on: ubuntu-latest
     steps:
       - name: 'Download artifact'
@@ -36,3 +40,41 @@ jobs:
         run: |
           unzip build.zip
           cat build.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Build-Artifact
+          path: build.txt
+          retention-days: 10
+
+  build-and-push-image:
+    name: Build and push image
+    runs-on: ubuntu-latest
+    needs: Get-deploy-artifact
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
