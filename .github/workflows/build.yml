@@ -34,14 +34,29 @@ jobs:
     runs-on: ubuntu-latest
     needs: Lint
     steps:
-      - run: echo "build done"
+      - name: Create build artifact
+        run: |
+          cd /
+          touch build.txt
+          echo "build done, run number: " > build.txt
+          echo $GITHUB_RUN_NUMBER >> build.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Build-Artifact
+          path: /build.txt
+          retention-days: 10
+        
   
   UnitTest:
     name: Unit Test
     runs-on: ubuntu-latest
     needs: Build
     steps:
-      - run: echo "tests done"
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Build-Artifact
+      - run: cat build.txt
   
   E2ETest:
     name: Cypress test
