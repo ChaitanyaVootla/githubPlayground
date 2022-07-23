@@ -35,3 +35,17 @@ jobs:
     needs: Lint
     steps:
       - run: echo "build done"
+  
+  Unit Test:
+    name: Unit Test
+    runs-on: ubuntu-latest
+    needs: Build
+    steps:
+      - run: echo "tests done"
+  
+  E2E Test:
+    name: Cypress test
+    runs-on: ubuntu-latest
+    needs: Build
+    steps:
+      - run: echo "tests done"
