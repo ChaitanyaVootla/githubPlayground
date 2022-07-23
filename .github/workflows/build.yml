@@ -36,7 +36,6 @@ jobs:
     steps:
       - name: Create build artifact
         run: |
-          cd /
           touch build.txt
           echo "build done, run number: " > build.txt
           echo $GITHUB_RUN_NUMBER >> build.txt
