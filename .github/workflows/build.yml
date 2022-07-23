@@ -39,6 +39,7 @@ jobs:
           touch build.txt
           echo "build done, run number: " > build.txt
           echo $GITHUB_RUN_NUMBER >> build.txt
+          cat build.txt
       - uses: actions/upload-artifact@v3
         with:
           name: Build-Artifact
