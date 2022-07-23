@@ -35,4 +35,4 @@ jobs:
       - name: 'Unzip artifact'
         run: |
           unzip build.zip
-          ls
+          cat build.txt
