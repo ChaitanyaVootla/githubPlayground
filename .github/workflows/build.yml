@@ -36,14 +36,14 @@ jobs:
     steps:
       - run: echo "build done"
   
-  Unit Test:
+  UnitTest:
     name: Unit Test
     runs-on: ubuntu-latest
     needs: Build
     steps:
       - run: echo "tests done"
   
-  E2E Test:
+  E2ETest:
     name: Cypress test
     runs-on: ubuntu-latest
     needs: Build
