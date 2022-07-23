@@ -11,4 +11,9 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Build-Artifact
+      - run: cat build.txt
       - run: echo "deployment done"
