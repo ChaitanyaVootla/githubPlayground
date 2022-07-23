@@ -43,7 +43,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: Build-Artifact
-          path: /build.txt
+          path: build.txt
           retention-days: 10
         
   
