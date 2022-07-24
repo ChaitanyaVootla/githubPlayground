@@ -1,0 +1,18 @@
+name: JFrog
+on:
+  workflow_dispatch:
+
+env:
+  REGISTRY: vootla.jfrog.io
+  IMAGE_NAME: vootla.jfrog.io/default-docker-local/${{ github.repository }}
+jobs:
+  Push-to-Docker:
+    name: Push to Docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Build image
+        run: |
+          docker build -t ${{ env.IMAGE_NAME }} .
+          docker images
