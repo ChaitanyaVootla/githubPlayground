@@ -13,7 +13,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - uses: jfrog/setup-jfrog-cli@v2
-        env: JF_ENV_1: ${{ secrets.JFROG_CLI_SECRET }}
+        env:
+          JF_ENV_1: ${{ secrets.JFROG_CLI_SECRET }}
       - name: Build image
         run: |
           # docker login -uspeedblaze@gmail.com vootla.jfrog.io -p ${{ secrets.JFROG_KEY }}
