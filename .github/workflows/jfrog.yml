@@ -16,4 +16,4 @@ jobs:
         run: |
           docker login -uspeedblaze@gmail.com vootla.jfrog.io -p ${{ secrets.JFROG_KEY }}
           docker build -t ${{ env.IMAGE_NAME }}:$GITHUB_RUN_NUMBER .
-          docker images
+          docker push -t ${{ env.IMAGE_NAME }}:$GITHUB_RUN_NUMBER
