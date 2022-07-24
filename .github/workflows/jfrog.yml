@@ -22,3 +22,5 @@ jobs:
           JF_ENV_1: ${{ secrets.JFROG_CLI_SECRET }}
       - run: |
           jf rt ping
+          docker pull vootla.jfrog.io/default-docker-local/githubplayground:8
+          jf rt bp
